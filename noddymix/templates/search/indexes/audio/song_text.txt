@@ -1,0 +1,6 @@
+{{object.title}}
+{{object.artist.name}}
+{% for featured in object.featuring.all %}
+{{featured.name}}
+{% endfor %}
+{{object.album.title}}

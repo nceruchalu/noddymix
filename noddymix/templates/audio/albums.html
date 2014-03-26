@@ -1,0 +1,20 @@
+<ul class="albums">
+  {% for playlist in playlists %}
+  <li class="album">
+    <a href="{% url 'playlist' playlist.id %}" class="art history">
+      {% with src=playlist.cover_album %}
+      <img src="{% if src and src.art %}{{src.art_small.url}}{% else %}{{STATIC_URL}}img/art_small.jpg{% endif %}" width="132" height="132" />
+  {% endwith %}
+      <span class="album-play icon"></span>
+      <span class="num-songs">{{playlist.num_songs}}</span>
+      <span class="num-songs-bg"></span>
+    </a>
+    <span class="title ellipsis">{{playlist.title}}</span>
+    <a class="artist ellipsis history" href="{% url 'userpage' playlist.owner.id %}">{{playlist.owner.get_full_name}}</a>
+  </li>
+  {% endfor %}
+</ul>
+{% if not playlists %}
+<p>No content here</p>
+{% endif %}
+<div class="clear"></div>

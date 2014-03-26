@@ -1,0 +1,19 @@
+<div id="page-summary">
+  {% with src=cover_album %}
+  <img src="{% if src and src.art %}{{src.art_thumbnail.url}}{% else %}{{STATIC_URL}}img/art_thumbnail.jpg{% endif %}" width="60" height="60" />
+  {% endwith %}
+  <div class="page-summary-details">
+    <span class="title">Playlist: {{playlist.title}}</span>
+    <span class="details"><a href="{% url 'login' %}">
+        This is a temporary playlist. Login for persistent playlists</a></span>
+  </div>
+  <div class="clear"></div>
+</div> <!-- end page-summary -->
+
+<div id="page-nav">
+  <ul>
+    <li><a class="active nav-songs history" 
+           href="{% url 'playlist_temp' playlist.id %}">
+        {{playlist.num_songs}} Songs</a></li>
+  </ul>
+</div> <!-- end #page-nav -->

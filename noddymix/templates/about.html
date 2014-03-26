@@ -1,0 +1,53 @@
+{% extends "tabbedPage.html" %}
+
+{% block about_active %}active{% endblock %}
+
+{% block nav-menu-expansion %}
+
+<div class="section" id="team">
+  <p class="heading">Naija music your way</p>
+  
+  <div class="stats">
+    <p><span class="number">{{total_plays}}</span> plays and counting</p>
+  </div>
+  
+  <div class="tw-follow">
+    <a href="https://twitter.com/noddymix" class="twitter-follow-button" 
+       data-show-count="true" data-size="large">Follow @noddymix</a>
+  </div>
+
+  <div class="fb-like">
+    <fb:like href="http://noddymix.com" send="false" layout="standard" 
+             width="450" show_faces="true"></fb:like>
+  </div>
+
+</div><!-- end team -->
+
+
+
+<div class="section" id="supported-devices">
+  <p class="heading">Try us on your mobile devices</p>
+  <ul>
+    <li>iOS 4+</li>
+    <li>Android 2.3+</li>
+    <li>Blackberry OS7+ and Playbook</li>
+    <li>Windows Phone 8</li>
+    </ul>
+  
+</div><!-- end supported devices -->
+{% endblock %}
+
+{% block morejs %}
+<!-- facebook likee -->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=326428767422412";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<!-- twitter follow -->
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+{% endblock %}

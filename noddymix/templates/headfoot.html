@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:fb="https://www.facebook.com/2008/fbml"
+      xmlns:fb="http://ogp.me/ns#" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  {% block moremeta %}
+  <meta property="og:image" content="{{STATIC_URL}}img/art_logo.png" />
+  {% endblock %}
+  <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/global.3.css" />
+  
+  <link rel="search" type="application/opensearchdescription+xml" 
+        href="{% url 'opensearch' %}" title="NoddyMix">
+  
+  <link rel="shortcut icon" type="image/x-icon"
+        href="{{STATIC_URL}}img/favicon.ico" />
+  <title>NoddyMix {% block title%}{% endblock %}</title>
+  <meta name="description" content="Naija music your way. Make playlists. Follow playlists. Take your mobile music everywhere you go" />
+</head>
+
+<body>
+  <div id="container">
+    <div id="header">
+      <!-- text logo -->
+      <span class="noddymix-logo"><a class="sprite" href="{% url 'homepage' %}">
+      </a></span>
+      
+      <!-- search bar -->
+      <form id="search_bar" action="{% url 'search' %}" method="get">
+        <input type="text" name="q" id="id_q" placeholder="Search"
+               value="{{query}}"/> 
+        <button type="submit" class="search-icon icon"></button>
+      </form>
+      
+      <!-- navigation -->
+      <ul class="header-nav">
+        <li><a href="{% url 'feedback' %}" class="icon request"
+               title="song request">
+        </a></li>
+        {% if user.is_authenticated %}
+        <li><a href="{% url 'settings' %}" class="icon settings" 
+               title="settings"></a></li>
+        {% endif %}
+        
+        {% with authenticated=user.is_authenticated %}
+        <li class="dropdownTrigger">
+          {% if authenticated %}
+          <a href="{% url 'profile' %}" >
+            <span class="ellipsis">{{user.get_account_name}}</span>
+            &#9662;</a>
+          {% else %}
+          <a href="{% url 'login' %}">Login &#9662;</a>
+          {% endif %}
+          <div class="dropdownContain">
+            <div class="dropOut">
+              <div class="triangle"></div>
+              <ul>
+                {% if authenticated %}
+                <li><a href="{% url 'profile' %}">Profile
+                    <span class="profile icon"></span></a></li>
+                <li><a href="{% url 'logout' %}">Logout
+                    <span class="logout icon"></span></a></li>
+                {% else %}
+                <li><a class="facebook-login" 
+                       href="{% url 'socialauth_begin' 'facebook' %}">Facebook
+                    <span class="icon"></span></a></li>
+                <li><a class="twitter-login" 
+                       href="{% url 'socialauth_begin' 'twitter' %}">Twitter
+                    <span class="icon"></span></a></li>
+                 <li><a class="google-login" 
+                       href="{% url 'socialauth_begin' 'google-oauth2' %}">
+                     Google<span class="icon"></span></a></li>
+                {% endif %}
+              </ul>
+            </div>
+          </div>
+          
+        </li>
+        {% endwith %}
+      </ul> <!-- end header-nav navigation -->
+      
+    </div> <!-- end of header -->
+    
+    
+    <div id="content" 
+         class="collapsed-feed {% block content-class %}{% endblock %}">
+      <div class="left-col scrollbar">
+        
+        <p class="heading">Browse</p>
+        <ul class="content-nav browse">
+          <li class="{% block new-releases-class %}{% endblock %}">
+            <span class="indicator icon"></span>
+            <a href="{% url 'homepage' %}" class="history">New Releases</a></li>
+          <li class="{% block heavy-rotation-class %}{% endblock %}">
+            <span class="indicator icon"></span>
+            <a href="{% url 'heavy_rotation' %}" class="history">
+              Heavy Rotation</a></li>
+          <li class="{% block top-playlists-class %}{% endblock %}">
+            <span class="indicator icon"></span>
+            <a href="{% url 'top_playlists' %}" class="history">
+              Top Playlists</a></li>
+        </ul>
+        
+        <p class="heading">Your Music</p>
+        <ul class="content-nav your-music">
+          <li class="{% block favorites-class %}{% endblock %}">
+            <span class="indicator icon"></span>
+            <a href="{% url 'favorites' %}" class="history">
+              Favorites</a></li>
+          <li class="{% block history-class %}{% endblock %}">
+            <span class="indicator icon"></span>
+            <a href="{% url 'history' %}" class="history">
+              History</a></li>
+          <li class="{% block queue-class %}{% endblock %} droppable"
+              data-playlist="queue"><span class="indicator icon"></span>
+            <a href="{% url 'queue' %}" class="history">Queue</a></li>
+        </ul>
+        
+        <p class="heading">
+          {% if user.is_authenticated %}
+          <a href="{% url 'userpage' request.user.id %}" class="history">
+            Playlists</a>
+          {% else %}
+          Playlists
+          {% endif %}
+          <a class="new-playlist" title="new playlist" href="javascript:;"
+             {% if not user.is_authenticated %}data-playlist-temp="1"{% endif %}
+             ><span class="icon"></span>Add</a>
+        </p>
+        <ul class="content-nav playlists">
+          {% if user.is_authenticated %}
+            {% for p in user.playlists.all %}
+            <li class="droppable 
+                       {% if playlist and playlist == p %}active{% endif %}"
+                data-playlist="{{p.id}}">
+              <span class="indicator icon"></span>
+              <a class="name history" href="{% url 'playlist' p.id %}">
+                {% if p.title %}{{p.title}}{% else %}Untitled{% endif %}</a>
+            </li>
+            {% endfor %}
+          {% else %}
+            {% for id, p in request.session.playlists.items %}
+            <li class="droppable 
+                       {% if playlist and playlist.id == p.id %}active{% endif %}"
+                data-playlist="{{p.id}}" data-playlist-temp="1">
+              <span class="indicator icon"></span>
+              <a class="name history" href="{% url 'playlist_temp' p.id %}">
+                {% if p.title %}{{p.title}}{% else %}Untitled{% endif %}</a>
+            </li>
+            {% endfor %}
+          {% endif %}
+        </ul>
+                
+      </div> <!-- end left-col -->
+      
+      <div class="middle-col scrollbar">
+        {% if messages %}
+        <ul class="messagelist">
+          {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+            <span class="icon"></span>{{ message }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+            
+        {% block content-middle %}
+          {% block content-middle-header %}{% endblock %}
+          {% include "audio/songs.html" %}
+        {% endblock %}
+      </div> <!-- end middle-col -->
+      
+      {% block right-col %}
+      <div class="right-col scrollbar">
+        <a class="feed-expander icon" href="javascript:;" title="show feed"></a>
+        
+        <a class="heading feed-collapser" href="javascript:;" title="hide feed">
+          <span class="icon"></span><span>Live Feed</span>
+        </a>
+        <div class="clear"></div>
+        
+       
+        <ul class="activity-feed">
+          {% with activities=user.get_recent_activities %}
+          {% for activity in activities %}
+          <li>{% include "activity/activity.html" %}</li>
+          {% endfor %}
+          
+          {% if not activities %}
+          <li>
+            {% if not user.is_authenticated %}
+            <a class="bold" href="{% url 'login' %}">Login </a> and {% endif %}
+            <span class="bold">follow</span> users to see activity.
+          </li>
+          {% endif %}
+          {% endwith %}
+        </ul>
+        
+        
+      </div> <!-- end right-col -->
+      {% endblock %}
+    </div> <!-- end of content -->
+    
+    {% block player %}
+    {% with id_player="player1" class_player="invisible" id_jplayer="jplayer1" %}
+    {% include "player.html" %}
+    {% endwith %}
+    {% with id_player="player2" class_player="invisible" id_jplayer="jplayer2" %}
+    {% include "player.html" %}
+    {% endwith %}
+    {% endblock %}
+    
+  </div> <!-- end of container -->
+  
+  <!-- hidden csrftoken container -->
+  <div id="csrftoken" class="hidden">{% csrf_token %}</div>
+  
+  
+  <!-- shows when page is loading -->
+  <div id="page-loading"></div>
+  
+  <!-- put js here -->
+  <!-- appropriate socket.io file -->
+  {% if debug %}
+  <script src="http://localhost:16637/socket.io/socket.io.js"></script>
+  {% else %}
+  <script src="http://173.192.122.232:16637/socket.io/socket.io.js"></script>
+  {% endif %}
+  
+  
+  {% if debug %}
+  <script type="text/javascript" src="{{STATIC_URL}}js/jquery-1.10.1.min.js">
+  </script>
+     <!-- custom jquery ui has: slider, sortable, droppable -->
+  <script type="text/javascript" 
+          src="{{STATIC_URL}}js/jquery-ui-1.10.3.custom.min.js"></script>
+  <script type="text/javascript" src="{{STATIC_URL}}js/jquery.tipsy.js">
+  </script>
+  <script type="text/javascript" src="{{STATIC_URL}}js/apprise-v2.js"></script>
+  <script type="text/javascript" src="{{STATIC_URL}}js/debug.js"></script>
+  <script type="text/javascript" src="{{STATIC_URL}}js/utils.js"></script>
+  <script type="text/javascript" src="{{STATIC_URL}}js/contextMenu.js">
+  </script>
+  <script type="text/javascript" src="{{STATIC_URL}}js/jquery.jplayer.min.js">
+  </script>
+  <script type="text/javascript" src="{{STATIC_URL}}js/playlist.js"></script>
+  <script type="text/javascript" src="{{STATIC_URL}}js/global.js"></script>
+  
+  {% else %}
+  <!-- production js file is simpler to work with-->
+  <script type="text/javascript" src="{{STATIC_URL}}js/compressed.4.js"></script>
+  {% endif %}
+
+  {% block morejs %}{% endblock %}
+  
+  <script type="text/javascript">
+    
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-31002986-1']);
+    _gaq.push(['_trackPageview']);
+    
+    (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+  </script>
+  
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+<div id="page-summary">
+  {% with src=playlist.cover_album %}
+  <img src="{% if src and src.art %}{{src.art_thumbnail.url}}{% else %}{{STATIC_URL}}img/art_thumbnail.jpg{% endif %}" width="60" height="60" />
+  {% endwith %}
+  <div class="page-summary-details">
+    <span class="title">Playlist: {{playlist.title}}</span>
+    <span class="details"><a href="{% url 'userpage' playlist.owner.id %}" 
+                             class="history">
+        By: {{playlist.owner.get_full_name}}</a></span>
+  </div>
+  
+  {% if user.is_authenticated %}
+  {% if user != playlist.owner %}
+  <span class="{% if playlist in request.user.subscriptions.all %}subscribed{% else %}subscribe{% endif%}
+               btn bold-text"
+        data-id="{{playlist.id}}"></span>
+  {% else %}
+  <span class="{% if playlist.is_public %}public{% else %}private{% endif %}
+               btn bold-text"
+        data-id="{{playlist.id}}"></span>
+  {% endif %}
+  
+  {% else %} <!-- user not authenticated -->
+  <a class="btn bold-text" href="{% url 'login' %}">LOGIN TO FAVORITE</a>
+  {% endif %}
+  <div class="clear"></div>
+</div> <!-- end page-summary -->
+
+<div id="page-nav">
+  <ul>
+    <li><a class="{% if active_tab == 'songs' %}active{% endif %} nav-songs
+                  history"
+           href="{% url 'playlist' playlist.id %}">
+        {{playlist.num_songs}} Songs</a></li>
+    <li><a class="{% if active_tab == 'subscribers' %}active{% endif %} 
+                  nav-subscribers history" 
+           href="{% url 'playlist_subscribers' playlist.id %}">
+        {{playlist.num_subscribers}} Subscribers</a></li>
+  </ul>
+</div> <!-- end #page-nav -->

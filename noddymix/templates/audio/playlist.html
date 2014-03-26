@@ -1,0 +1,14 @@
+{% extends "headfoot.html" %}
+
+{% block moremeta %}
+<meta property="og:image" content="{{ogimage}}" />
+{% endblock %}
+
+{% block title %}| {{playlist.title}}-{{playlist.owner}}{% endblock %}
+
+{% block content-middle-header %}
+{% with active_tab='songs' %}
+{% include "audio/header_playlist.html" %}
+{% endwith %}
+{% endblock %}
+

@@ -1,0 +1,138 @@
+{% extends "tabbedPage.html" %}
+
+{% block profile_active %}active{% endblock %}
+
+{% block nav-menu-expansion %}
+<div id="profile-data" class="section">
+  <!-- cover photo -->
+  <div {% if user.cover and user.cover_small %}
+       style="background-image:url('{{user.cover_small.url}}')" 
+       {% else%}
+       style="background-image:url('{{STATIC_URL}}img/cover_small.jpg')" 
+       {% endif %}
+       class="cover-img">
+   
+    <!-- edit cover photo -->
+    <a class="edit-photo icon" title="change cover" href="javascript:;"></a>
+    <form class="edit-photo" action="{% url 'acct_editcover' %}"
+          method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{coverform.cover}}
+      <input type="submit" value="Submit">
+    </form>
+    
+    <!-- delete cover photo if it exists -->
+    {% if user.cover %}
+    <a class="delete-photo icon" title="delete cover" href="javascript:;"></a>
+    <form class="delete-photo" action="{% url 'acct_deletecover' %}"
+          method="post">
+      {% csrf_token %}
+      <input type="submit" value="Submit">
+    </form>
+    {% endif %}
+    
+  </div>
+ 
+  
+  <div class="pic-name">
+    <!-- avatar photo -->
+    <div class="profile-img-border">
+      <div {% if user.avatar and user.avatar_small %} 
+           style="background-image:url('{{user.avatar_small.url}}')" 
+           {% else %}
+           style="background-image:url('{{STATIC_URL}}img/avatar_small.jpg')" 
+           {% endif %}
+           class="profile-img">
+        <!-- edit avatar photo -->
+        <a class="edit-photo icon" title="change avatar" href="javascript:;">
+        </a>
+        <form class="edit-photo" action="{% url 'acct_editavatar' %}"
+              method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{avatarform.avatar}}
+          <input type="submit" value="Submit">
+        </form>
+        
+        <!-- delete avatar photo if it exists -->
+        {% if user.avatar %}
+        <a class="delete-photo icon" title="delete avatar" href="javascript:;">
+        </a>
+        <form class="delete-photo" action="{% url 'acct_deleteavatar' %}"
+              method="post">
+          {% csrf_token %}
+          <input type="submit" value="Submit">
+        </form>
+        {% endif %}
+        
+      </div>
+    </div><!-- end profile-img-border -->
+    
+    <div class="profile-name">
+      <p class="name bold-text">{{user.get_full_name}}</p>
+      <!--p class="description">Could have a status message here</p-->
+    </div><!-- end profile-name -->
+    
+  </div> <!-- end pic-name -->
+  
+  <div class="profile-stats clear">
+    <ul>
+      <li><a href="{% url 'userpage' user.id %}" class="num-subscribers">
+          <span class="count">{{user.num_playlists}}</span>
+          <span class="title">Playlists</span>
+      </a></li>
+      <li><a href="{% url 'followers' user.id %}" class="num-followers">
+          <span class="count">{{user.num_followers}}</span>
+          <span class="title">Followers</span>
+      </a></li>
+      <li><a href="{% url 'following' user.id %}" class="num-followings">
+          <span class="count">{{user.num_following}}</span>
+          <span class="title">Following</span>
+      </a></li>
+    </ul>
+  </div><!-- end profile-stats -->
+  
+</div> <!-- end #profile-data -->
+
+<div class="section" id="connected-accounts">
+  <p class="heading">Connected Accounts</p>
+  
+  <ul>
+    <li class="facebook-connect">
+      <span class="icon"></span>
+      <span class="text facebook-font">Facebook</span>
+      {% if social_auth.facebook %}
+      <a class="toggle" href="{% url 'socialauth_disconnect_individual' 'facebook' social_auth.facebook.id %}">
+        <span class="toggle_inner on"></span></a>
+      {% else %}
+      <a class="toggle" href="{% url 'socialauth_begin' 'facebook' %}">
+        <span class="toggle_inner"></span></a>
+      {% endif %}
+    </li> 
+    
+    <li class="twitter-connect">
+      <span class="icon"></span>
+      <span class="text twitter-font">Twitter</span>
+      {% if social_auth.twitter %}
+      <a class="toggle" href="{% url 'socialauth_disconnect_individual' 'twitter' social_auth.twitter.id %}">
+        <span class="toggle_inner on"></span></a>
+      {% else %}
+      <a class="toggle" href="{% url 'socialauth_begin' 'twitter' %}">
+        <span class="toggle_inner"></span></a>
+      {% endif %}
+    </li>
+    
+    <li class="google-connect">
+      <span class="icon"></span>
+      <span class="text google-font">Google</span>
+      {% if soc_auth.google %}
+      <a class="toggle" href="{% url 'socialauth_disconnect_individual' 'google-oauth2' soc_auth.google.id %}">
+        <span class="toggle_inner on"></span></a>
+      {% else %}
+      <a class="toggle" href="{% url 'socialauth_begin' 'google-oauth2' %}">
+          <span class="toggle_inner"></span></a>
+      {% endif %}
+    </li> 
+  </ul>
+</div> <!-- end #connected-accounts -->
+
+{% endblock %}

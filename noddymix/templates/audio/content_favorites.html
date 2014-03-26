@@ -1,0 +1,10 @@
+<div id="page-content"> 
+  {% if user.is_authenticated %}
+    <p class="page-heading">Favorites: Your subscriptions</p>
+  {% else %}
+    <p class="page-heading">Favorites: <a href="{% url 'login' %}">
+        Login to view your subscriptions</a></p>
+  {% endif %}
+    
+  {% include "audio/albums.html" %}
+</div>

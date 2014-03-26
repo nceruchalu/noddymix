@@ -1,0 +1,23 @@
+{% extends "tabbedPage.html" %}
+
+{% block settings_active %}active{% endblock %}
+
+{% block nav-menu-expansion %}
+
+<div class="section" id="account-settings">
+  <p class="heading">Account Settings</p>
+  <form action="" method="post">
+    {% csrf_token %} 
+    <ul>
+      {% for field in form %}
+      <li>
+        {{field}}
+        {{field.label_tag}}
+      </li>
+      {% endfor %}
+      <li class="submit">
+        <input class="bold-text" type="submit" value="SAVE" /></li>
+    </ul>
+  </form>
+</div> <!-- end #account-settings -->
+{% endblock %}

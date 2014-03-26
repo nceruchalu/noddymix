@@ -1,0 +1,33 @@
+<img src="{% if activity.actor.avatar %}{{activity.actor.avatar_small.url}}{% else %}{{STATIC_URL}}img/avatar_thumbnail.jpg{% endif %}" />
+
+<div class="details">
+  {% with actor_url=activity.actor_url %}
+  {% if actor_url %}<a class="bold" href="{{actor_url}}">
+    {{activity.actor.get_full_name}}</a>
+  {% else %}<span class="bold">
+    {{activity.actor.get_full_name}}</span>{% endif %}
+  {% endwith %}
+  
+  <span>{{activity.verb}}</span>
+  
+  {% if activity.object %}
+    {% with object_url=activity.object_url %}
+    {% if object_url %}<a href="{{object_url}}">{{activity.object}}</a>
+    {% else %}<span>{{activity.object}}</span>{% endif %}
+    {% endwith %}
+  {% endif %}
+  
+  {% if activity.object and activity.target %}to{% endif %}
+  
+  {% if activity.target %}
+    {% with target_url=activity.target_url %}
+    {% if target_url %}<a href="{{target_url}}">{{activity.target}}</a>
+    {% else %}<span>{{activity.target}}</span>{% endif %}
+    {% endwith %}
+  {% endif %}
+  
+  {% if not no_activity_time %}
+  <span class="light">{{activity.date_added|timesince}} ago</span>
+  {% endif %}
+</div>
+<div class="clear"></div>

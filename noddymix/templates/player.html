@@ -1,0 +1,63 @@
+<div id="{{id_player}}" class="player {{class_player}}">
+      
+  <!-- jplayer and cover art sit here -->
+  <a id="{{id_jplayer}}" class="plCover" href="javascript:;" target="_blank"></a>
+  
+  <div class="plActControl">
+    <!-- song metadata -->
+    <div class="plMeta">
+      <ul>
+        <li class="plArtist ellipsis">No Artist</li>
+        <li class="plTitle ellipsis">No Title</li>
+      </ul>
+    </div>
+    
+    <!-- progress loader and time played. 
+         time played is relative to how much of song has downloaded
+      -->
+    <div class="plScrubbler">
+      <div class="plLoad" style="width: 40%;">
+        <div class="plTimeRemain" style="width: 100%;"></div>
+      </div>
+    </div>
+    
+    <!-- numeric time played -->
+    <div class="plTime"> 
+      <span class="time_dur">00:00</span>
+    </div>
+  </div>
+  
+  
+  <div class="plVolumeControl">
+    
+    <!-- volume header text is mute/unmute control -->
+    <div class="plVolumeHeader plMute">
+      <a href="javascript:;">Volume</a></div>
+    <div class="plVolumeHeader plUnMute">
+      <a href="javascript:;">Volume</a></div>
+    
+    <!-- volume bar and current volume -->
+    <div class="plVolume">
+      <div class="plVolumeRemain" style="width: 100%;"></div>
+    </div>
+    
+    <!-- volume header value -->
+    <div class="plVol"><span>80</span></div>
+      </div>
+  
+  
+  <!-- player controls -->
+  <div class="plMainControl">
+    <!--div class="plPlaylistShow icon"></div-->
+    <a class="plPlaylistShow icon history" href="{% url 'queue' %}"
+       title="queue"></a>
+    <div class="plLoop icon"></div>
+    <div class="plLoopOff icon" style="display:none;"></div>
+    
+    <div class="plBackwards icon"></div>
+    <div class="plPlay icon"></div>
+    <div class="plPause icon" style="display:none;"></div>
+    <div class="plForwards icon"></div>
+  </div>
+  
+</div> <!-- end of music player -->

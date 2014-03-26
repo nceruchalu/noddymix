@@ -1,0 +1,31 @@
+{% extends "tabbedPage.html" %}
+
+{% block login_active %}active{% endblock %}
+
+{% block nav-menu-expansion %}
+
+<div class="section" id="login-page">
+  <p class="heading">Login with:</p>
+  
+  <ul>
+    <li class="facebook-connect">
+      <a class="toggle" 
+         href="{% url 'socialauth_begin' 'facebook' %}?{{request.GET.urlencode}}">
+        <span class="icon"></span>
+        <span class="text facebook-font">Facebook</span></a>
+    </li> 
+    
+    <li class="twitter-connect">
+      <a class="toggle" href="{% url 'socialauth_begin' 'twitter' %}?{{request.GET.urlencode}}">
+        <span class="icon"></span>
+        <span class="text twitter-font">Twitter</span></a>
+    </li>
+    
+    <li class="google-connect">
+      <a class="toggle" href="{% url 'socialauth_begin' 'google-oauth2' %}?{{request.GET.urlencode}}">
+        <span class="icon"></span>
+        <span class="text google-font">Google</span></a>
+    </li> 
+  </ul>
+</div> <!-- end #account-settings -->
+{% endblock %}

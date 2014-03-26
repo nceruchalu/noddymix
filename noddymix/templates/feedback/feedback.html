@@ -1,0 +1,30 @@
+{% extends "tabbedPage.html" %}
+
+{% block request_active %}active{% endblock %}
+
+{% block nav-menu-expansion %}
+
+<div class="section" id="feedback-form">
+  <p class="heading">Feedback Form</p>
+  {% if form.errors %}
+  <p class="error-text">
+    Please correct the error{{ form.errors|pluralize }} below.</p>
+  {% endif %}
+  
+  
+  <form action="" method="post">
+    {% csrf_token %} 
+    <ul>
+      {% for field in form %}
+      <li>
+        {{field.errors}}
+        {{field.label_tag}}
+        {{field}}
+      </li>
+      {% endfor %}
+      <li class="submit">
+        <input class="bold-text" type="submit" value="SUBMIT" /></li>
+    </ul>
+  </form>
+</div>
+{% endblock %}

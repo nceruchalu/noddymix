@@ -1,0 +1,936 @@
+// The following two lines import the default Sencha Touch theme. If you are building
+// a new theme, remove them and the add your own CSS on top of the base CSS (which
+// is already included in your app.json file).
+// @import 'sencha-touch/default';
+// @import 'sencha-touch/default/all';
+
+// Custom code goes here..
+
+$include-pictos-font: false;
+$include-default-icons: false;
+$font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+$font-family-bold: "Helvetica Neue", Helvetica, "Lato", Arial, sans-serif; 
+$font-weight:300;
+$font-weight-bold:400;
+$font-color:#373737;
+$font-color-light:#858585;
+$base-gradient:"flat";
+$base-color:#1b79d3;
+$page-bg-color:#FBFAF7;
+
+$list-bg-color:$page-bg-color;
+$list-active-color:$list-bg-color;
+$list-pressed-color:$list-bg-color;
+$include-list-highlights: false;
+
+$include-toolbar-uis:false;
+$toolbar-base-color:$page-bg-color;
+$toolbar-input-color:#ccc;
+
+@import 'sencha-touch/default';
+@import 'sencha-touch/default/all';
+
+/*@import 'sencha-touch/default/src/Panel';
+@import 'sencha-touch/default/src/Button';
+@import 'sencha-touch/default/src/Toolbar';
+@import 'sencha-touch/default/src/MessageBox';
+@import 'sencha-touch/default/src/tab/Panel';
+@import 'sencha-touch/default/src/dataview/List';
+@import 'sencha-touch/default/src/field/Search';
+*/
+
+// using custom fonts
+$icon-font-family:'Custom';
+@include icon-font($icon-font-family, inline-font-files('custom/custom.woff', woff, 'custom/custom.ttf', truetype,'custom/custom.svg', svg));
+@include icon('list','!', $icon-font-family);
+
+$search-icon-font:'"';
+@include icon('search', $search-icon-font, $icon-font-family);
+.x-field-search .x-field-input:before {
+    font-family: $icon-font-family;
+    content:$search-icon-font;
+    font-size:0.91em;
+}
+
+@include icon('volume', '#', $icon-font-family);
+@include icon('volume-off', '$', $icon-font-family);
+@include icon('prev', '%', $icon-font-family);
+$play-icon-font:'&';
+@include icon('play', $play-icon-font, $icon-font-family);
+@include icon('next', "'", $icon-font-family);
+@include icon('pause', '(', $icon-font-family);
+@include icon('back', ')', $icon-font-family);
+@include icon('forward', '*', $icon-font-family);
+@include icon('list2', '+', $icon-font-family);
+@include icon('loop', ',', $icon-font-family);
+@include icon('shuffle', '-', $icon-font-family);
+@include icon('link', '.', $icon-font-family);
+@include icon('add-to-list', '/', $icon-font-family);
+$facebook-icon-font:'0';
+@include icon('facebook', $facebook-icon-font, $icon-font-family);
+$twitter-icon-font:'1';
+@include icon('twitter', $twitter-icon-font, $icon-font-family);
+@include icon('camera', '2', $icon-font-family);
+@include icon('blocked', '3', $icon-font-family);
+@include icon('smiley', '4', $icon-font-family);
+$checkmark-icon-font:'5';
+@include icon('checkmark', $checkmark-icon-font, $icon-font-family);
+@include icon('cancel', '6', $icon-font-family);
+@include icon('facebook2', '7', $icon-font-family);
+@include icon('twitter2', '8', $icon-font-family);
+@include icon('googleplus', '9', $icon-font-family);
+$google-icon-font:':';
+@include icon('google', $google-icon-font, $icon-font-family);
+@include icon('pencil', ';', $icon-font-family);
+@include icon('unlocked', '<', $icon-font-family);
+@include icon('locked', '=', $icon-font-family);
+$plus-icon-font:'>';
+@include icon('plus', $plus-icon-font, $icon-font-family);
+@include icon('text', '?', $icon-font-family);
+$delete-icon-font:'@';
+@include icon('delete', $delete-icon-font, $icon-font-family);
+$heart-icon-font:'A';
+@include icon('heart', $heart-icon-font, $icon-font-family);
+$plus2-icon-font:'B';
+@include icon('plus2', $plus2-icon-font, $icon-font-family);
+$loop2-icon-font:'C';
+@include icon('loop2', $loop2-icon-font, $icon-font-family);
+$user-add-icon-font:'D';
+@include icon('user-add', $user-add-icon-font, $icon-font-family);
+
+.x-title {
+    line-height: 44px;
+    font-size: 22px;
+    color: #111111;
+    text-align: left;
+    margin: 0 0.3em;
+    padding: 0 5px;
+    font-weight: $font-weight-bold;
+}
+
+
+.x-list .x-list-header, .x-list-normal .x-list-header {
+    font-weight:$font-weight-bold;
+    text-transform:uppercase;
+}
+
+$slidenavigation-bg-light: #135290;//#6d3353; 
+$slidenavigation-bg-mid:#10457A;//#341538;
+$slidenavigation-bg-dark: #0A2C4D;//#020031;
+.x-slidenavigation-list.x-list {
+    background: $slidenavigation-bg-mid; /* Old browsers */
+    background: -moz-linear-gradient(45deg,  $slidenavigation-bg-dark 0%, $slidenavigation-bg-light 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left bottom, right top, color-stop(0%,$slidenavigation-bg-dark), color-stop(100%,$slidenavigation-bg-light)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(45deg, $slidenavigation-bg-dark 0%, $slidenavigation-bg-light 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(45deg, $slidenavigation-bg-dark 0%, $slidenavigation-bg-light 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(45deg, $slidenavigation-bg-dark 0%, $slidenavigation-bg-light 100%); /* IE10+ */
+    background: linear-gradient(45deg, $slidenavigation-bg-dark 0%, $slidenavigation-bg-light 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#020031', endColorstr='#6d3353',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+    
+    .x-list-item.x-list-item-tpl, 
+    .x-list-item.x-list-item-tpl.x-list-footer-wrap {
+        border:none;
+        color:#fff;
+        font-size:0.92em;
+    }
+    
+    $slidenavigation-dark-bg:darken($slidenavigation-bg-dark,5%);
+    .x-list-item.x-list-item-tpl.x-item-selected,
+    .x-list-item.x-list-item-tpl.x-item-pressed {
+        background-color:$slidenavigation-dark-bg;
+        border-top-color:$slidenavigation-dark-bg;
+    }
+    .x-field-search .x-component-outer {
+        background: $slidenavigation-dark-bg;
+    }
+        
+    .x-list-header {
+        color:#fff;
+        font-weight:$font-weight-bold;
+        background:transparent;
+        border:none;
+        font-size:0.55em;
+    }
+    
+    .x-list-header.x-list-header-swap {
+        display:none;
+    }
+    
+    .x-list-footer-wrap+.x-list-header {
+        margin-top:23px;
+    }
+    
+    .avatar {
+        box-shadow: #999 0px 0px 6px 2px;
+        -moz-box-shadow: #999 0px 0px 6px 2px;
+        -webkit-box-shadow: #999 0px 0px 6px 2px;
+        
+        background-repeat:no-repeat;
+         border-radius: 16px;
+	-webkit-border-radius: 16px;
+	-moz-border-radius: 16px;
+        width:33px;
+        height:33px;
+    }
+    .avatar, .name {
+        display:inline-block;
+    }
+    .name {
+        position: relative;
+        top: -10px;
+        margin-left: 10px;
+    }
+    
+    
+    .x-toolbar, .x-form .x-scroll-container {
+        background:inherit;
+        border:none;
+    }
+}
+
+
+.ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+}
+
+.no-border-radius {
+    -webkit-border-radius: 0em;
+    -moz-border-radius: 0em;
+    -ms-border-radius: 0em;
+    -o-border-radius: 0em;
+    border-radius: 0em;
+}
+
+/* custom toolbar ui */
+@include sencha-toolbar-ui('light', $page-bg-color);
+@include sencha-toolbar-ui('dark', $page-bg-color);
+.x-toolbar {
+    .x-title, .x-button-icon {
+        color:$base-color;
+    }
+}
+.x-toolbar.x-docked-top {
+    border-bottom-color: #ddd;
+}
+.x-toolbar.x-docked-bottom {
+    border-top-color: #ddd;
+}
+
+body {
+    font-weight:$font-weight;
+    color:$font-color;
+}
+
+/* song list items */
+.x-list .song.x-list-item {
+    font-size:20px;
+    color:#808080;
+    position:relative;
+    clear:both;
+    border-top: 1px solid #F3F0E7/*#eae5d5*/;
+    border-left: 4px solid transparent;
+    text-transform:capitalize;
+    
+    .x-innerhtml {
+        padding: 11px 14px 11px 10px;
+    }
+    .idx {
+        margin-right: 5px;
+        font-size: 0.6em;
+        position: relative;
+        top: -1px;
+    }
+    .title {
+        float: left;
+        width:80%;
+        
+    }
+    .time {
+        float:right;
+    }
+    
+    .x-list-disclosure {
+        background:transparent;
+        display:none;
+    }
+    
+    .x-list-disclosure:before {
+        content: $delete-icon-font;
+        font-family: $icon-font-family;
+        color: #a0a0a0;
+        font-size: 24px;
+        line-height: 35px;
+    }
+}
+
+.x-list .song.x-list-item.x-item-selected {
+    color:#202020;
+    border-left-color:$base-color;
+    font-family:$font-family-bold;
+    font-weight:$font-weight-bold;
+}
+
+
+.edit {
+    
+    .x-list .song.x-list-item {
+        /* when in edit mode, hide time to make room for delete icon */
+        .time {
+            display:none;
+        }
+        
+        /* only show disclosure icon when in edit mode */
+        .x-list-disclosure {
+            display:block;
+        }
+    }
+}
+
+$audiocontrols-color:#50636B;
+$audiocontrols-color-light:#A6B8BF;
+.audiotitlebar.x-toolbar {
+    .x-button-icon {
+        font-size:1.3em;
+        color:$audiocontrols-color;
+    }
+    .x-button-icon:before {
+        font-size:1.3em;
+        line-height: 1.20em;
+    }
+}
+
+.x-container.songdetail {
+    
+    .progressbar-container {
+        background:#D8D8D8;
+        
+        .progressbar {
+            background:$base-color;
+        }
+    }
+    
+    .x-toolbar.audiotoolbar {
+        .x-button {
+            height:3em;
+                      
+            .x-button-icon {
+                color:$audiocontrols-color;
+            }
+                        
+            .play, .pause {
+                width:2.4em;
+                height:2.8em;
+            }
+            .play:before, .pause:before {
+                font-size:2.4em;
+                line-height: 1.25em;
+            }
+            
+            .prev, .next {
+                width:1.8em;
+                height:2.8em;
+            }
+            .prev:before, .next:before {
+                font-size:1.8em;
+                line-height: 1.7em;
+            }
+            
+            .loop, .shuffle {
+                color:$audiocontrols-color-light;
+            }
+        }
+    }
+}
+
+.x-container.songdetail .x-toolbar, .audiotitlebar.x-toolbar, 
+.playlisttitlebar, .usertitlebar, .searchtitlebar {
+    .title, .artist, .row1, .row2 {
+        text-align:center;
+        line-height:1.2em;
+        font-size:0.7em;
+        color:$audiocontrols-color;
+        text-transform:capitalize;
+        font-weight:$font-weight;
+    }
+    .artist, .row2 {
+        color:$audiocontrols-color-light;
+    }
+    .title, .row1 {
+        font-family:$font-family-bold;
+    }
+}
+
+.audiotitlebar.x-toolbar .x-title .x-innerhtml {
+    padding-left:20px;
+}
+
+.reflectBelow	{ 
+    -webkit-box-reflect: below 0
+    -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(0.5, transparent), to(rgba(251,250,247,0.5))); 
+}
+
+.no-list-content-panel .x-html p {
+    font-size:20px;
+    span.highlight {
+        color:$base-color;
+    }
+}
+/* prevent pull refresh from overlapping the lists */
+.x-list-pullrefresh {
+    z-index:-1;
+}
+/* hide pull refresh last-updated time */
+.x-list-pullrefresh-updated {
+    display:none;
+}
+.x-list-pullrefresh-message {
+    font-weight:$font-weight;
+}
+
+/* hide the load more message in some situations */
+.dont-load-more .x-list-paging {
+    display:none;
+}
+
+/* change color of loop and shuffle buttons when active */
+.x-container.is-looping .x-toolbar.audiotoolbar .x-button .loop,
+.x-container.is-shuffled .x-toolbar.audiotoolbar .x-button .shuffle {
+    color: $base-color;
+}
+/* also have titlebar image glow */
+$titlebar-img-blur:8px;
+.x-container.is-looping, .x-container.is-shuffled {
+    .audiotitlebar .x-img {
+        -webkit-box-shadow:0 0 $titlebar-img-blur $base-color;
+        -moz-box-shadow: 0 0 $titlebar-img-blur $base-color;
+        box-shadow:0 0 $titlebar-img-blur $base-color;
+    }
+}
+
+.menu.x-panel.x-floating {
+    background-color:$page-bg-color;
+    font-size:0.9em;
+    
+    .x-anchor {
+        background-color:$page-bg-color !important;
+        
+        /* have to include specific functionality since showBy blows and so
+         * cannot expect .x-anchor-top
+         */
+        @extend .x-anchor.x-anchor-top;
+        right: 8px !important;
+        top: 0px !important;
+        display:block !important;
+    }
+    .x-list-item.x-list-item-first {
+        border-top:none;
+    }
+    .x-list-item.x-list-item-last {
+       border-bottom:none;
+    }
+    
+    .x-list-item.x-list-item-tpl .x-innerhtml {
+        @extend .ellipsis;
+        padding: 8px 10px 8px 23px;
+        position:relative;
+        left:3px;
+        top:0px;
+    
+    
+        .x-button.x-button-plain {
+            display:inline-block;
+            padding:0;
+            height:1.5em;
+            position:absolute;
+            top:5px;
+            left:0px;
+            .x-button-icon.x-shown {
+                display:inline;
+                margin-right:1.6em;
+                color:$audiocontrols-color-light;
+            }
+            .x-button-icon:before {
+                font-size: 1.1em;
+                line-height: 1.5em;
+            }
+        }
+    
+        .text {
+        }
+    }
+}
+
+.playlists.x-list {
+    .x-list-item.x-list-item-tpl {
+        border-left: 8px solid transparent;
+        text-transform:capitalize;
+        
+        .x-innerhtml {
+            padding: 7px 7px 3px 4px;
+            img {
+                display:inline-block;
+                border:1px solid #eae5d5;
+            }
+            .details {
+                display:inline-block;
+                position:relative;
+                top:-10px;
+                margin-left:20px;
+                width:68%;
+                font-weight:$font-weight;
+                
+                .title {
+                    font-size:1.1em;
+                }
+                .owner, .count {
+                    font-size:0.7em;
+                    color:$font-color-light;
+                }
+                .count {
+                    text-transform:none;
+                }
+            }
+        }
+    }
+    
+    .x-list-item.x-item-selected {
+        border-left-color:$base-color;
+        .x-innerhtml .details {
+            .title, .owner, .count {
+                color:#202020;
+            }
+        }
+    }
+}
+
+.accountlogin {
+    .x-button {
+        @extend .no-border-radius;
+        background:$page-bg-color;
+                
+        border:none;
+        
+        .x-button-icon:before {
+            font-size: 6.5em;
+            line-height: 0em;
+            left: -10px;
+            top: 13px;
+        }
+        
+        .x-button-icon.facebook2 {
+            color:#3b579d;
+        }
+        .x-button-icon.twitter2 {
+            color:#2daae1;
+        }
+        .x-button-icon.googleplus {
+            color:#dd4b39;
+        }
+        
+        .x-button-label {
+            font-weight: $font-weight;
+            position: relative;
+            top: 38px;
+            left: -15px;
+            font-size:0.7em;
+            line-height:1.4em;
+            color:$page-bg-color;
+        }
+    }
+}
+
+.instructions.x-panel  {
+    .x-html.x-innerhtml {
+        padding:0.8em 1.2em;
+        p {
+            text-align:center;
+            margin-bottom:0;
+        }
+    }
+}
+
+.blur { 
+    -webkit-filter: blur(3px); 
+    -moz-filter: blur(3px); 
+    -o-filter: blur(3px); 
+    -ms-filter: blur(3px); 
+    filter: blur(3px); 
+}
+
+.accountsummary .statistics {
+    .x-button {
+        @extend .no-border-radius;
+        background:#f3eee8;
+        padding: 0.4em 0.4em;
+        text-align: center;
+        border:none;
+        border-bottom: 1px solid rgba(0,0,0,0.2);
+        
+        .count {
+            font-weight:$font-weight-bold;
+            font-size:1.05em;
+        }
+        .name {
+            font-size:0.68em;
+        }
+    }
+    .x-button+.x-button {
+        border-left:1px solid $page-bg-color;
+    }
+    .x-button.x-button-pressing {
+        color:$base-color;
+    }
+    
+    .x-button.last-nav-item {
+        border-right:1px solid rgba(0,0,0,0.2);
+        -webkit-border-bottom-right-radius: 5px;
+        -moz-border-radius-bottomright: 5px;
+        border-bottom-right-radius: 5px;
+    }
+    
+    .avatar {
+        box-shadow: #999 0px 0px 6px 2px;
+        -moz-box-shadow: #999 0px 0px 6px 2px;
+        -webkit-box-shadow: #999 0px 0px 6px 2px;
+        position:relative;
+        top:-48px;
+        border:2px solid $page-bg-color;
+    }
+}
+
+.icon:before {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    text-align: center;
+    font-family: "Custom";
+}
+
+.icon.facebook:before {
+    content: $facebook-icon-font;
+    color:#3b579d;
+}
+.icon.twitter:before {
+    content: $twitter-icon-font;
+    color:#2daae1;
+}
+.icon.google:before {
+    content: $google-icon-font;
+    color:#dd4b39;
+}
+
+
+.accountprofile {    
+    .connected-accounts {
+        .x-toggle-field {
+            height: 51px;
+            padding-top: 4px;
+            
+            .x-component-outer {
+                padding:0.1em;
+                position: relative;
+                
+                .x-toggle {
+                    display: inline-block;
+                    position: relative;
+                    left: 203px;
+                }
+                .label {
+                    position: absolute;
+                    top: 7px;
+                    font-size:1.2em;
+                    
+                    .icon {
+                        margin:0 10px;
+                        position: relative;
+                        top: 2px;
+                    }
+                }
+            }
+        }
+    }
+}
+.x-button.x-button-decline, .x-button.x-button-action {
+    .x-button-label {
+        font-weight:$font-weight-bold;
+        line-height:1.4em;
+        font-family:$font-family-bold;
+    }
+}
+
+
+.accountsummary {
+    position:relative;
+    
+    .username.x-panel {
+        position:absolute;
+        z-index:100;
+        bottom:70px;
+        
+        .text {
+            position: absolute;
+            left: 115px;
+            width: 200px;
+            color: #fff;
+            text-shadow: 0 1px 1px rgba(0,0,0,0.7);
+            font-size: 1.4em;
+            font-weight:bold;
+            font-family:$font-family-bold;
+            margin:0;
+        }
+    }
+}
+
+.x-msgbox {
+    .x-title .x-innerhtml {
+        font-weight:$font-weight;
+        font-family:$font-family-bold;
+    }
+    
+    .x-toolbar .x-button {
+        .x-button-label {
+            font-weight:$font-weight;
+            font-family:$font-family-bold;
+            font-size:0.9em;
+        }
+    }
+}
+
+.x-mask .x-mask-inner {
+    font-weight:$font-weight-bold;
+}
+
+/* config for text-buttons on titlebars */
+.x-toolbar.x-docked-top {
+    .x-button .x-button-label {
+        font-size:1.05em;
+        font-weight:$font-weight;
+        color:$base-color;
+    }
+    
+    .x-button.x-button-action .x-button-label {
+        color:$page-bg-color;
+    }
+}
+
+
+.x-form .x-scroll-container {
+    background-color:$page-bg-color;
+}
+.x-form-label {
+    background-color:#ffffff;
+    span {
+        font-size:1.00em;
+        font-weight:$font-weight-bold;
+        font-family:$font-family-bold;
+    }
+}
+
+/* set checbox field icon */
+.x-checkmark-base, .x-field-checkbox .x-field-mask::after, .x-field-radio .x-field-mask::after, .x-select-overlay .x-item-selected.x-list-item::after {
+    content:$checkmark-icon-font;
+    font-family:$icon-font-family;
+}
+
+.x-picker-slot {
+    .x-dataview-item {
+        font-family:$font-family-bold;
+        font-weight:$font-weight;
+    } 
+    .x-dataview-item.x-item-selected {
+        font-weight:$font-weight-bold;
+    }
+}
+
+.x-form-fieldset-title {
+    font-family:$font-family-bold;
+}
+
+
+.users.x-list {
+    .x-list-item.x-list-item-tpl {
+        border-left: 4px solid transparent;
+        text-transform:capitalize;
+        font-family:$font-family;
+        font-weight:$font-weight;
+        color:#808080;
+        
+        .x-innerhtml {
+            padding: 7px 7px 3px 4px;
+            img {
+                display:inline-block;
+            }
+            .name {
+                display:inline-block;
+                position:relative;
+                top:-10px;
+                margin-left:15px;
+                width:75%;
+            }
+        }
+        
+        .x-list-disclosure {
+            @extend .no-border-radius;
+        }
+        
+        .x-list-disclosure.follow {
+            background:#a0a0a0;
+        }
+        .x-list-disclosure.following {
+            background:$base-color;
+        }
+        .x-list-disclosure.hidden {
+            display:none;
+        }
+        
+        .x-list-disclosure:before {
+            font-family: $icon-font-family;
+            color: $page-bg-color;
+            font-size: 16px;
+            line-height: 35px;
+        }
+        .x-list-disclosure.following:before {
+            content: $checkmark-icon-font;
+        }
+        .x-list-disclosure.follow:before {
+            content: $plus-icon-font;
+        }
+        
+    }
+    
+    .x-list-item.x-item-selected {
+        color:#202020;
+        border-left-color:$base-color;
+        font-weight:$font-weight-bold;
+    }
+}
+
+.userdetail {
+    .x-button.follow {
+        background:#a0a0a0;
+    }
+    .x-button.following {
+        background:$base-color;
+    }
+    .x-button.hidden {
+        display: none !important;
+    }
+
+    .x-button.follow, .x-button.following {
+        color:$page-bg-color;
+        
+        .x-button-label {
+            font-size:0.8em;
+            margin-left:0em;
+            font-weight:$font-weight;
+            font-family:$font-family-bold;
+        }
+    }
+}
+
+.activities {
+    .x-list-item.x-list-item-tpl, 
+    .x-list-item.x-list-item-tpl.x-item-selected {
+        color:#939393;
+        font-size:0.9em;
+        div.text {
+            display:inline-block;
+            margin-left:50px;
+            
+            .verb {
+                text-transform:capitalize;
+            }
+            .highlight {
+                color:$base-color;
+            }
+            .timesince {
+                font-size:0.7em;
+                color:#B2B2B2;
+            }
+        }
+        div.icon-container {
+            display:inline-block;
+            background-color:#e0e0e0;
+            /* 100% height and 1 extra px to cover border*/
+            position: absolute; top: -1px; bottom: 0;
+            z-index:2;
+            width: 50px;
+            left: 0;
+            
+            .left-half {
+                border-right:1px solid #c1c1c1;
+                height:100%;
+                left:0;
+                width:50%;
+            }
+            
+            .x-button.x-button-plain {
+                display:inline-block;
+                padding:0;
+                height:28px;
+                width:28px;
+                position:absolute;
+                top:7px;
+                left:11px;
+                background:$base-color;
+                border-radius: 14px;
+	        -webkit-border-radius: 14px;
+	        -moz-border-radius: 14px;
+                border: 3px solid #e0e0e0;
+                
+                .x-button-icon.x-shown {
+                    display:inline;
+                    color:$audiocontrols-color-light;
+                    left:5px;
+                    top:0px;
+                }
+                .x-button-icon:before {
+                    font-size: 0.72em;
+                    line-height: 2.0em;
+                    color:$page-bg-color;
+                }
+                
+                .x-button-icon.played:before {
+                    content:$play-icon-font;
+                }
+                .x-button-icon.created:before {
+                    content:$plus-icon-font;
+                }
+                .x-button-icon.added:before {
+                    content:$plus2-icon-font;
+                }
+                .x-button-icon.updated:before {
+                    content:$loop2-icon-font;
+                }
+                .x-button-icon.favorited:before {
+                    content:$heart-icon-font;
+                }
+                .x-button-icon.followed:before {
+                    content:$user-add-icon-font;
+                }
+                
+            }
+            .triangle-left {
+	        width: 0;
+                height: 0;
+                border-top: 7px solid transparent;
+                border-bottom: 7px solid transparent;
+                border-right: 7px solid $page-bg-color;
+                position: absolute;
+                top: 14px;
+                right: 0px;
+            }
+        }
+    }
+}
+
+
+.x-tabbar.x-docked-top .x-tab .x-button-label {
+    font-weight:$font-weight-bold;
+    font-family:$font-family-bold;
+}

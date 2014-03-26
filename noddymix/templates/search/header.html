@@ -1,0 +1,28 @@
+<div id="page-summary">
+  <img src="{{STATIC_URL}}img/art_thumbnail.jpg" width="60" height="60" />
+  <div class="page-summary-details">
+    <span class="title">Searched for: <span class="bold-text query">{{query}}</span></span>
+    <span class="details">
+      {% if suggestion %}
+      <a href="?q={{suggestion}}" class="history">
+        Did you mean <span class="bold-text query">{{suggestion}}</span>?</a>
+      {% endif %}
+    </span>
+  </div>
+  
+  <div class="clear"></div>
+</div> <!-- end page-summary -->
+
+<div id="page-nav">
+  <ul>
+    <li><a class="{% if active_tab == 'songs' %}active{% endif %} nav-songs
+                  history" href="{% url 'search' %}?q={{query}}">
+        Songs</a></li>
+    <li><a class="{% if active_tab == 'playlists' %}active{% endif %} 
+                  nav-playlists history" href="{% url 'search_playlists' %}?q={{query}}">
+        Playlists</a></li>
+    <li><a class="{% if active_tab == 'users' %}active{% endif %} 
+                  nav-playlists history" href="{% url 'search_users' %}?q={{query}}">
+        Users</a></li>
+  </ul>
+</div> <!-- end #page-nav -->

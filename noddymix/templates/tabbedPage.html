@@ -1,0 +1,29 @@
+{% extends "headfoot.html" %}
+
+{% block content-class %}no-player no-feed{% endblock %}
+
+{% block content-middle %}
+<div class="nav-menu {% if not user.is_authenticated %}no-profile three{% else %}no-login{% endif %}">
+  <ul>
+    <li class="profile {% block profile_active %}{% endblock %}">
+      <a href="{% url 'profile' %}"><span class="icon"></span>PROFILE</a></li>
+    <li class="login {% block login_active %}{% endblock %}">
+      <a href="{% url 'login' %}"><span class="icon"></span>LOGIN</a></li>
+    {% if user.is_authenticated %}
+    <li class="settings {% block settings_active %}{% endblock %}">
+      <a href="{% url 'settings' %}"><span class="icon"></span>SETTINGS</a></li>
+    {% endif %}
+    <li class="request-song {% block request_active %}{% endblock %}">
+      <a href="{% url 'feedback' %}"><span class="icon"></span>REQUEST</a></li>
+    <li class="about {% block about_active %}{% endblock %}">
+      <a href="{% url 'about' %}"><span class="icon"></span>ABOUT</a></li>
+  </ul>
+</div>
+
+<div class="nav-menu-expansion">
+  {% block nav-menu-expansion %}{% endblock %}
+</div>
+{% endblock %}
+
+{% block right-col %}{% endblock %}
+{% block player %}{% endblock %}

@@ -1,0 +1,24 @@
+<ul class="users">
+  {% for person, following in users %}
+  <li class="user">
+    <a  href="{% url 'userpage' person.id %}" class="history">
+      <img {% if person.avatar %} 
+           src="{{person.avatar_thumbnail.url}}" 
+           {% else %}
+           src="{{STATIC_URL}}img/avatar_thumbnail.jpg"
+           {% endif %}
+           />
+      <span class="user-name bold-text">{{person.get_full_name}}</span>
+    </a>
+    {% if request.user.is_authenticated %}
+    <!-- only show follow/unfollow button if person is not current user -->
+    {% if person != user %}
+    <span class="btn small bold-text ajax
+                 {% if following %}following{% else%}follow{% endif %}"
+           data-id="{{person.id}}"
+          ></span>
+    {% endif %}
+    {% endif %}
+</li>
+  {% endfor %}
+</ul>
