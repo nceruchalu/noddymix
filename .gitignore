@@ -18,4 +18,5 @@ noddymix/*/mobile/touch/
 noddymix/*/mobile/.sencha/
 noddymix/static/mobile/resources/sass/.sass-cache/
 noddymix/static/mobile/build/NoddyMix/production/deltas/
-noddymix/static/mobile*/archive/
+noddymix/static/mobile/archive/
+noddymix/static/mobile/app/archive/
