@@ -7,7 +7,7 @@
 | Date    | 03/14/2014                                  |
 | Website | [http://noddymix.com/](http://noddymix.com) |
 
-[NoddyMix](http://noddymix.com) is the source latest and greatest from the Nigerian Music Industry.
+[NoddyMix](http://noddymix.com) is the source of the latest and greatest from the Nigerian Music Industry.
 Users can make and share playlists. Logged in users get the additional ability to follow friends and stay updated on friend's activities in *__realtime__* 
 
 As an added bonus users get to use native-like mobile web-apps 
