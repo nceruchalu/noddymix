@@ -266,10 +266,16 @@ class User(AbstractUser):
             self.delete_cover_files(self)
         
         # all users this user followed now have 1 less follower
-        followings = self.following.all();
+        followings = self.following.all()
         for following in followings:
             following.followed.num_followers -= 1
             following.followed.save()
+        
+        # all users following this user now have 1 less follow
+        followers = self.followers.all()
+        for follower in followers:
+            follower.follower.num_following -= 1
+            follower.follower.save()
             
         # all playlists this user subscribed to now have 1 less subscriber
         playlists = self.subscriptions.all()
