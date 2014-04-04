@@ -6,7 +6,8 @@ from django.contrib.auth.decorators import login_required
 from django.template.loader import render_to_string
 import urllib, json
 
-from noddymix.apps.audio.models import Song, Playlist, Playlist_Songs, Album
+from noddymix.apps.audio.models import Song, Playlist, Playlist_Songs, Album, \
+    SongPlay
 from noddymix.apps.account.models import User
 from noddymix.apps.relationship.models import Following
 from noddymix.apps.activity.models import Activity
@@ -18,6 +19,10 @@ from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 import copy
+
+# imports for heavy rotation
+import datetime
+from collections import Counter
 
 
 def check_session_playlists(request):
@@ -618,8 +623,18 @@ def heavy_rotation(request):
     Author:      Nnoduka Eruchalu
     """
     if request.is_ajax():
-        songs_list = Song.objects.all().order_by(
-            '-num_plays', '-date_added')[:settings.SONGS_PER_PAGE]
+        # heavily rotated songs are those with most plays in the last few days
+        start_date = datetime.datetime.now() - datetime.timedelta(
+            days=settings.HEAVY_ROTATION_DAYS)
+        
+        # get all songs played over the last week, and sort by DESC play count
+        top_songplays = SongPlay.objects.filter(date_added__gte=start_date)
+        top_songplays_songs = [songplay.song for songplay in top_songplays]
+        top_songs_cntr = Counter(top_songplays_songs).most_common(
+            settings.SONGS_PER_PAGE)
+        songs_list = [cnt[0] for cnt in top_songs_cntr]
+        
+        # finally return JSON-formatted representations of these songs
         return songs_helper(request, songs_list)
     
     # a mobile page shouldn't make a direct request here
@@ -881,7 +896,11 @@ def song_play(request, id):
         song = get_object_or_404(Song, id=id)
         song.num_plays += 1
         song.save()
-        # log this activity
+        
+        # account for this song play
+        SongPlay.objects.create(song=song)
+        
+        # log this activity in the activity streams
         if request.user.is_authenticated():
             activity.send(request.user, verb="played", target=song)
         else:

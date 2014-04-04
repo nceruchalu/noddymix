@@ -4,14 +4,13 @@
 |         |                                             |
 | ------- | ------------------------------------------- |
 | Author  | Nnoduka Eruchalu                            |
-| Date    | 03/14/2014                                  |
+| Date    | 04/04/2014                                  |
 | Website | [http://noddymix.com/](http://noddymix.com) |
 
 [NoddyMix](http://noddymix.com) is the source of the latest and greatest from the Nigerian Music Industry.
 Users can make and share playlists. Logged in users get the additional ability to follow friends and stay updated on friend's activities in *__realtime__* 
 
-As an added bonus users get to use native-like mobile web-apps 
-[Thanks to Sencha Touch](http://www.sencha.com/products/touch)
+As an added bonus users get to use native-like mobile web-apps [thanks to Sencha Touch](http://www.sencha.com/products/touch)
 
 
 #### Available on Following Mobile Devices
@@ -178,10 +177,6 @@ The static images and  compressed css & js are uploaded to the appropriate AWS S
 
 ### Server Setup Notes
 These instructions here are what I did on my [Webfaction](https://www.webfaction.com/) server.
-
-#### `settings.py` Configurations:
-`settings.py` expects to import a file called `settings_secret.py` in the `noddymix/` folder. 
-See `settings_secret.template.py` for what is required in the file.
 
 
 #### `httpd.conf` Additions:

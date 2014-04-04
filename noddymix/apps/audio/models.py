@@ -455,3 +455,26 @@ class Playlist_Songs(models.Model):
         
         super(Playlist_Songs, self).save(*args, **kwargs) # call "real" save()
 
+
+class SongPlay(models.Model):
+    """
+    Description: These are the representation of song plays across all users, 
+                 authenticated and anonymous. This model gives an indication of
+                 most popular song over any given time period.
+                 This could have been placed under the `activity` app but I feel
+                 it's only tied to Song objects so belongs here.
+                                                      
+    Author:      Nnoduka Eruchalu
+    """
+    
+    song = models.ForeignKey(Song, related_name="plays", editable=False)
+    date_added = models.DateTimeField(default=datetime.now, editable=False)
+    
+    class Meta:
+        ordering = ['-date_added']
+        get_latest_by = 'date_added'
+        
+    def __unicode__(self):
+        return self.song.title + " play at: " + unicode(self.date_added)
+    
+    

@@ -360,6 +360,8 @@ PLAYLISTS_PER_PAGE = 36
 # need to support non-string keys in request.session. Ints are keys of temporary
 # playlists in their collections.
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
+# number of days to evaluate heavy rotation songs from
+HEAVY_ROTATION_DAYS = 7
 
 
 # ---------------------------------------------------------------------------- #
