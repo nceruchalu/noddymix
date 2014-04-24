@@ -220,6 +220,7 @@ NODE_PATH="/home/nceruchalu/lib/node_modules"
 
 12,32,52 * * * * ~/webapps/noddymix/apache2/bin/start
 */45 * * * * /usr/local/bin/python2.7 ~/webapps/noddymix/noddymix/manage.py update_index > ~/cron/noddymix_update_index.log 2>&1
+0 */4 * * * /usr/local/bin/python2.7 ~/webapps/noddymix/noddymix/manage.py rank_songs
 */5 * * * * sh ~/cron/watchdog_redis.sh > ~/cron/watchdog_redis.log 2>&1
 */5 * * * * sh ~/cron/watchdog_node.sh > ~/cron/watchdog_node.log 2>&1
 0 2 * * * mysqldump --defaults-file=$HOME/db_backups/<config-filename>.cnf -u <username> <database> > $HOME/db_backups/<backups-root-filename>-`date +\%Y\%m\%d`.sql 2>> $HOME/db_backups/cron.log

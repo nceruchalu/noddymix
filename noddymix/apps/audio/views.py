@@ -7,7 +7,7 @@ from django.template.loader import render_to_string
 import urllib, json
 
 from noddymix.apps.audio.models import Song, Playlist, Playlist_Songs, Album, \
-    SongPlay
+    SongPlay, SongRank
 from noddymix.apps.account.models import User
 from noddymix.apps.relationship.models import Following
 from noddymix.apps.activity.models import Activity
@@ -19,10 +19,6 @@ from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 import copy
-
-# imports for heavy rotation
-import datetime
-from collections import Counter
 
 
 def check_session_playlists(request):
@@ -614,14 +610,6 @@ def heavy_rotation(request):
     """
     Description: Heavy rotation songs: i.e. top played songs over the last few
                  days.
-                 The algorithm is somewhat based on the ranking performed by
-                 Hacker News where each song played in the last week is scored
-                 Score = (P)/(T+2)^G
-                 where,
-                   P = number of song plays of an item
-                   T = time since last song play
-                   G = Gravity, which will be set to 1.8 just like Hacker News
-                 Reference: http://amix.dk/blog/post/19574
                  
                  A mobile page will be redirected to the homepage
     
@@ -631,42 +619,8 @@ def heavy_rotation(request):
     Author:      Nnoduka Eruchalu
     """
     if request.is_ajax():
-        # want to use same value of now() everywhere
-        now = datetime.datetime.now() 
-        
-        # heavily rotated songs are those with top scores in the last few days
-        start_date = now - datetime.timedelta(days=settings.HEAVY_ROTATION_DAYS)
-    
-        # get all songs played over the last week, with their play counts
-        songplays = SongPlay.objects.filter(date_added__gte=start_date)
-                
-        # populate dictionary where keys are Song objects and values are 
-        # 2-element lists of play count and hours since last play
-        songs_playcnt_playtime = {}
-        for songplay in songplays:
-            song = songplay.song
-            # if song not already in dictionary then this is most recent play
-            # time and first acknowledged play.
-            if song not in songs_playcnt_playtime:
-                # remember we actually want time since last play in hours
-                time_since_play = now - songplay.date_added
-                time_since_play = time_since_play.seconds/3600.0
-                songs_playcnt_playtime[song] = [1, time_since_play]
-            
-            # else song is already in dictionary, so account for one extra play
-            else:
-                songs_playcnt_playtime[song][0] += 1
-        
-        # update dictionary values to be song play scores
-        for k, v in songs_playcnt_playtime.items():
-            songs_playcnt_playtime[k] = v[0] / ((v[1] + 2.0)**1.8) 
-        
-        # get sorted list of songs, sorting by DESC scores.
-        songs_list = sorted(songs_playcnt_playtime, 
-                            key=songs_playcnt_playtime.get, 
-                            reverse=True)[:settings.SONGS_PER_PAGE]
-        
-        # finally return JSON-formatted representations of these songs
+        songs_list = [songrank.song for songrank in
+                      SongRank.objects.all().order_by('-score')]
         return songs_helper(request, songs_list)
     
     # a mobile page shouldn't make a direct request here

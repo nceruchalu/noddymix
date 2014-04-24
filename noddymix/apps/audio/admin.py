@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.conf import settings
 from django import forms
 from noddymix.apps.audio.models import Song, Album, Artist, Playlist, \
-    Playlist_Songs, SongPlay
+    Playlist_Songs, SongPlay, SongRank
 
 
 def delete_selected_s(modeladmin, request, queryset):
@@ -249,6 +249,16 @@ class SongPlayAdmin(admin.ModelAdmin):
     list_display = ('song', 'date_added')
     readonly_fields = ('song', 'date_added')
 
+class SongRankAdmin(admin.ModelAdmin):
+    """
+    Description: Representation of the SongRank model in the admin interface.
+                                                      
+    Author:      Nnoduka Eruchalu
+    """
+    search_fields = ('song__title',)
+    list_display = ('song', 'score')
+    readonly_fields = ('song', 'score')
+
 
 admin.site.register(Song, SongAdmin)
 admin.site.register(Album, AlbumAdmin)
@@ -256,3 +266,4 @@ admin.site.register(Artist, ArtistAdmin)
 admin.site.register(Playlist, PlaylistAdmin)
 admin.site.register(Playlist_Songs, Playlist_SongsAdmin)
 admin.site.register(SongPlay, SongPlayAdmin)
+admin.site.register(SongRank, SongRankAdmin)

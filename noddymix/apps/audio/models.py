@@ -5,6 +5,7 @@ from imagekit.models import ImageSpecField
 from imagekit.processors import SmartResize, Adjust
 from noddymix.utils import get_upload_path
 from noddymix.apps.account.models import User
+from django.conf import settings
 
 from datetime import datetime
 from mutagen.mp3 import MP3
@@ -458,7 +459,7 @@ class Playlist_Songs(models.Model):
 
 class SongPlay(models.Model):
     """
-    Description: These are the representation of song plays across all users, 
+    Description: These are the representations of song plays across all users, 
                  authenticated and anonymous. This model gives an indication of
                  most popular song over any given time period.
                  This could have been placed under the `activity` app but I feel
@@ -478,3 +479,46 @@ class SongPlay(models.Model):
         return self.song.title + " play at: " + unicode(self.date_added)
     
     
+class SongRank(models.Model):
+    """
+    Description: This model represents the popularity of the songs. The `score`
+                 represents the popularity with users, and the higher scored
+                 songs will be first to show up on the 'heavy rotation' list.
+                 
+    Author:      Nnoduka Eruchalu
+    """
+    song = models.OneToOneField(Song, related_name="rank", primary_key=True,
+                                editable=False)
+    score = models.FloatField(default=0.0, editable=False)
+    
+    class Meta:
+        ordering = ['-score']
+        
+    def __unicode__(self):
+        return self.song.title + " with score: " + unicode(self.score)
+    
+    def set_score(self, num_plays, now, last_play_date):
+        """
+        Description: Set song ranking score based on recent song plays
+                     The algorithm is somewhat based on the ranking performed by
+                     Hacker News where each song played in the last 
+                     `HEAVY_ROTATION_DAYS` days is scored using the formula:
+                     Score = (P)/(T+2)^G
+                     where,
+                       P = number of song plays of an item
+                       T = time since last song play
+                       G = Gravity
+                     Reference: http://amix.dk/blog/post/19574
+                     
+        Arguments:   num_plays:      number of song plays
+                     now:            reference for time since last play
+                     last_play_date: last song play datetime
+                     
+        Return:      None
+                                  
+        Author:      Nnoduka Eruchalu
+        """
+        # rememeber we actually want time since last play in hours
+        time_since_play = (now - last_play_date).seconds/3600.0
+        self.score = \
+            num_plays / (time_since_play + 2.0)**settings.SONG_RANK_GRAVITY

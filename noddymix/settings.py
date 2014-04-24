@@ -362,6 +362,8 @@ PLAYLISTS_PER_PAGE = 36
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 # number of days to evaluate heavy rotation songs from
 HEAVY_ROTATION_DAYS = 7
+# gravity value to use when determining song score
+SONG_RANK_GRAVITY = 1.8
 
 
 # ---------------------------------------------------------------------------- #
