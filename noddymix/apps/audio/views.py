@@ -620,7 +620,8 @@ def heavy_rotation(request):
     """
     if request.is_ajax():
         songs_list = [songrank.song for songrank in
-                      SongRank.objects.all().order_by('-score')]
+                      SongRank.objects.all()
+                      .order_by('-score')[:settings.SONGS_PER_PAGE]]
         return songs_helper(request, songs_list)
     
     # a mobile page shouldn't make a direct request here
