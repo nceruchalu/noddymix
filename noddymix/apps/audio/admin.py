@@ -249,6 +249,18 @@ class SongPlayAdmin(admin.ModelAdmin):
     list_display = ('song', 'date_added')
     readonly_fields = ('song', 'date_added')
 
+    def has_add_permission(self, request): 
+        """
+        Description: Don't want users adding SongPlays through admin 
+          
+        Arguments:   - request: HttpRequest object representing current request
+        Return:      Boolean: False
+                    
+        Author:      Nnoduka Eruchalu
+        """
+        return False
+    
+
 class SongRankAdmin(admin.ModelAdmin):
     """
     Description: Representation of the SongRank model in the admin interface.
@@ -258,6 +270,17 @@ class SongRankAdmin(admin.ModelAdmin):
     search_fields = ('song__title',)
     list_display = ('song', 'score')
     readonly_fields = ('song', 'score')
+
+    def has_add_permission(self, request): 
+        """
+        Description: Don't want users adding SongRanks through admin 
+          
+        Arguments:   - request: HttpRequest object representing current request
+        Return:      Boolean: False
+                    
+        Author:      Nnoduka Eruchalu
+        """
+        return False
 
 
 admin.site.register(Song, SongAdmin)

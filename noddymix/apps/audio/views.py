@@ -619,8 +619,10 @@ def heavy_rotation(request):
     Author:      Nnoduka Eruchalu
     """
     if request.is_ajax():
+        # use select_related('song') so as to only hit the database when getting
+        # the SongRank objects
         songs_list = [songrank.song for songrank in
-                      SongRank.objects.all()
+                      SongRank.objects.select_related('song').all()
                       .order_by('-score')[:settings.SONGS_PER_PAGE]]
         return songs_helper(request, songs_list)
     
