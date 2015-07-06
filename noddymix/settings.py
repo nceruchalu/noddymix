@@ -247,7 +247,7 @@ FILE_UPLOAD_HANDLERS = (
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
 # Workaround to issues in AWS that lead to errors like:
-#     CertificateError: hostname 'media.eventsapp.com.s3.amazonaws.com' 
+#     CertificateError: hostname 'media.noddymix.com.s3.amazonaws.com' 
 #     doesn't match either of '*.s3.amazonaws.com', 's3.amazonaws.com'
 # ref: https://github.com/boto/boto/issues/2836
 AWS_S3_CALLING_FORMAT = OrdinaryCallingFormat()
