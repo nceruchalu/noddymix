@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 import os
 import socket
 from datetime import datetime, timedelta
+from boto.s3.connection import OrdinaryCallingFormat
 
 # import sensitive information
 from settings_secret import *
@@ -245,6 +246,11 @@ FILE_UPLOAD_HANDLERS = (
 # ---------------------------------------------------------------------------- #
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
+# Workaround to issues in AWS that lead to errors like:
+#     CertificateError: hostname 'media.eventsapp.com.s3.amazonaws.com' 
+#     doesn't match either of '*.s3.amazonaws.com', 's3.amazonaws.com'
+# ref: https://github.com/boto/boto/issues/2836
+AWS_S3_CALLING_FORMAT = OrdinaryCallingFormat()
 
 # Specify AWS S3 bucket to upload files to
 if DEBUG == True:
